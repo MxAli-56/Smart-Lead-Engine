@@ -4,7 +4,6 @@ A production‑ready lead scoring and routing system that automatically categori
 
 Overview
 Why This Exists
-Workflow Architecture
 Features
 Tech Stack
 How It Works (Step by Step)
@@ -37,38 +36,6 @@ Sending instant Discord alerts for Gold leads (so sales teams can call within se
 Sending personalized emails to every lead.
 
 Logging everything to Google Sheets with a LeadGrade column.
-
-
-🧩 Workflow Architecture
-┌─────────────────────────────────────────────────────────────────┐
-│                         LEAD CAPTURE                          │
-│                  (Webhook / HTML Form / curl)                 │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                        DATA POLISHER                          │
-│          (Set Node – clean name, lowercase email)             │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                         ROUTING (IF Nodes)                    │
-├─────────────────────────────────────────────────────────────────┤
-│  Bronze (1-10) │ Silver (11-50) │ Gold (51+) │ Fallback        │
-└─────────────────────────────────────────────────────────────────┘
-          │              │               │              │
-          ▼              ▼               ▼              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      EMAIL DELIVERY                           │
-│   Personalized Gmail – dynamic subject + custom body          │
-└─────────────────────────────────────────────────────────────────┘
-          │              │               │              │
-          ▼              ▼               ▼              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      LOGGING & ALERTS                         │
-│   Google Sheets (LeadGrade column) + Discord Alerts (Gold)    │
-└─────────────────────────────────────────────────────────────────┘
 
 
 🚀 Features
