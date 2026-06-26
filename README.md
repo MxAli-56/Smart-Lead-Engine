@@ -1,4 +1,3 @@
-<img width="653" height="628" alt="image" src="https://github.com/user-attachments/assets/d553d503-18b0-492b-adcc-14941db3fb17" />Smart Lead Engine – n8n Automation
 A production‑ready lead scoring and routing system that automatically categorizes prospects, triggers real‑time alerts, and sends personalized email responses.
 
 📖 Table of Contents
