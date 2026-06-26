@@ -1,0 +1,883 @@
+{
+  "name": "lead_magnet",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "expression",
+        "output": "={{ $json.CompanySize === \"1-10\" ? 0 : ($json.CompanySize === \"11-50\" ? 1 : ($json.CompanySize === \"51+\" ? 2 : 3)) }}",
+        "looseTypeValidation": "="
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -672,
+        -128
+      ],
+      "id": "2fc0f13b-9629-44bf-9d62-55b814113f9b",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4b8129b5-baa0-4bf9-b17e-244e3db1cc39",
+              "name": "=emailSubject",
+              "value": "=Here's your guide: {{ $json.Name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -432,
+        -224
+      ],
+      "id": "04802143-c5d6-45f2-be20-f4f3cdbf284d",
+      "name": "Bronze"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "44abf38b-6c0f-40b5-b4a1-1b4a8786e20e",
+              "name": "=emailSubject",
+              "value": "=Important: {{ $json.Name }}'s Guide for {{ $json.Industry }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -304,
+        -48
+      ],
+      "id": "ae6b1e39-6f65-4b65-92ac-5762969f48ab",
+      "name": "Silver"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3041a43a-be6d-407a-8d28-f902e03fc8f7",
+              "name": "emailSubject ",
+              "value": "=Priority Delivery: {{ $json.Name }} Guide for {{ $json.Industry }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -304,
+        144
+      ],
+      "id": "5e3cb064-3ec4-4ccc-a9f6-070a9b9db945",
+      "name": "Gold"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "96a51e24-f072-4d3f-bd7b-a4ec5219b961",
+              "name": "=emailSubject",
+              "value": "=UNMATCHED LEAD: {{ $json.Name }} (CompanySize: {{ $json.CompanySize }})",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -544,
+        144
+      ],
+      "id": "c3de37e7-77f2-4076-b863-52df3792d0e1",
+      "name": "Fallback"
+    },
+    {
+      "parameters": {
+        "sendTo": "flexibot.alerts@gmail.com",
+        "subject": "={{ $json.EmailSubject }}",
+        "message": "=<p>Hi {{ $('Switch').item.json.Name }},</p>\n<p>Thanks for your interest! Here's your guide to {{ $('Switch').item.json.Industry }}.</p>\n<p>You can download it here: [https://smile-care-dental-lovat.vercel.app/]</p>\n<p>Best regards,<br>The Team</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -16,
+        -224
+      ],
+      "id": "7926de53-0226-4f61-bc9b-5e8533c02a62",
+      "name": "Send Bronze Email",
+      "webhookId": "9a31a5e2-d5b3-46b2-ab3f-d0f85d9391fa",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tpKI2lY40apuho8X",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "flexibot.alerts@gmail.com",
+        "subject": "={{ $json.emailSubject }}",
+        "message": "=<p>Hi {{ $('Switch').item.json.Name }},</p>\n<p>As a Silver member, you're iconic</p>\n<p>Thanks for your interest! Here's your guide to {{ $('Switch').item.json.Industry }}.</p>\n<p>You can download it here: [https://smile-care-dental-lovat.vercel.app/]</p>\n<p>Best regards,<br>The Team</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        128,
+        -32
+      ],
+      "id": "685c2cbc-0e51-4fec-adeb-9e9dae2d5676",
+      "name": "Send Silver Email",
+      "webhookId": "9a31a5e2-d5b3-46b2-ab3f-d0f85d9391fa",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tpKI2lY40apuho8X",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "flexibot.alerts@gmail.com",
+        "subject": "={{ $json.EmailSubject }}",
+        "message": "=<p>Hi {{ $('Switch').item.json.Name }},</p>\n<p>As a Gold member, you're our first priority</p>\n<p>Thanks for your interest! Here's your guide to {{ $('Switch').item.json.Industry }}.</p>\n<p>You can download it here: [https://smile-care-dental-lovat.vercel.app/]</p>\n<p>Best regards,<br>The Team</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        128,
+        208
+      ],
+      "id": "41278735-6d2d-4dab-9fba-658a03884c2e",
+      "name": "Send Gold Email",
+      "webhookId": "9a31a5e2-d5b3-46b2-ab3f-d0f85d9391fa",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tpKI2lY40apuho8X",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://discord.com/api/webhooks/1519949214480732261/nLD6gWHZxrC6OXgCnWPdkgouBGwLk44F76VaNfZRREplyfqwtkXgCjsp57M6PnJWmjW8",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"🚨 *HIGH-VALUE LEAD ALERT!* 🚨\\n> **Name:** {{ $('Switch').item.json.Name }}\\n> **Company Size:** {{ $('Switch').item.json.CompanySize }}\\n> **Industry:** {{ $('Switch').item.json.Industry }}\\n> **Action:** Call ASAP!\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        336,
+        208
+      ],
+      "id": "81d08481-406e-46e6-8825-a0d05f30cc8f",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ekCF3Kto6PO5erHoiqxktlTWaSCdj8fezMpY-pJUo6Q",
+          "mode": "list",
+          "cachedResultName": "LeadMagnetEngine - Proj # 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ekCF3Kto6PO5erHoiqxktlTWaSCdj8fezMpY-pJUo6Q/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ekCF3Kto6PO5erHoiqxktlTWaSCdj8fezMpY-pJUo6Q/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Switch').item.json.Name }}",
+            "CompanySize": "={{ $('Switch').item.json.CompanySize }}",
+            "Industry": "={{ $('Switch').item.json.Industry }}",
+            "EmailSubject": "={{ $json['emailSubject '] }}",
+            "LeadGrade": "Gold",
+            "email": "={{ $('Switch').item.json.Email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CompanySize",
+              "displayName": "CompanySize",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EmailSubject",
+              "displayName": "EmailSubject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LeadGrade",
+              "displayName": "LeadGrade",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -80,
+        208
+      ],
+      "id": "059defcc-521a-4eef-b58d-640d896b36ef",
+      "name": "Gold Sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fDsQWQxq30evlUah",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ekCF3Kto6PO5erHoiqxktlTWaSCdj8fezMpY-pJUo6Q",
+          "mode": "list",
+          "cachedResultName": "LeadMagnetEngine - Proj # 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ekCF3Kto6PO5erHoiqxktlTWaSCdj8fezMpY-pJUo6Q/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ekCF3Kto6PO5erHoiqxktlTWaSCdj8fezMpY-pJUo6Q/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Switch').item.json.Name }}",
+            "CompanySize": "={{ $('Switch').item.json.CompanySize }}",
+            "Industry": "={{ $('Switch').item.json.Industry }}",
+            "EmailSubject": "={{ $json.emailSubject }}",
+            "LeadGrade": "Silver",
+            "email": "={{ $('Switch').item.json.Email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CompanySize",
+              "displayName": "CompanySize",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EmailSubject",
+              "displayName": "EmailSubject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LeadGrade",
+              "displayName": "LeadGrade",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -96,
+        -32
+      ],
+      "id": "983c15a8-138b-4267-9d07-a585b1d8a0d1",
+      "name": "Silver Sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fDsQWQxq30evlUah",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ekCF3Kto6PO5erHoiqxktlTWaSCdj8fezMpY-pJUo6Q",
+          "mode": "list",
+          "cachedResultName": "LeadMagnetEngine - Proj # 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ekCF3Kto6PO5erHoiqxktlTWaSCdj8fezMpY-pJUo6Q/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ekCF3Kto6PO5erHoiqxktlTWaSCdj8fezMpY-pJUo6Q/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Switch').item.json.Name }}",
+            "CompanySize": "={{ $('Switch').item.json.CompanySize }}",
+            "Industry": "={{ $('Switch').item.json.Industry }}",
+            "EmailSubject": "={{ $json.emailSubject }}",
+            "LeadGrade": "Bronze",
+            "email": "={{ $('Switch').item.json.Email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CompanySize",
+              "displayName": "CompanySize",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EmailSubject",
+              "displayName": "EmailSubject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LeadGrade",
+              "displayName": "LeadGrade",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -224,
+        -224
+      ],
+      "id": "af6ba26f-4c3e-46fb-9e7a-3de6a5ee99bc",
+      "name": "Bronze Sheet",
+      "retryOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fDsQWQxq30evlUah",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ekCF3Kto6PO5erHoiqxktlTWaSCdj8fezMpY-pJUo6Q",
+          "mode": "list",
+          "cachedResultName": "LeadMagnetEngine - Proj # 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ekCF3Kto6PO5erHoiqxktlTWaSCdj8fezMpY-pJUo6Q/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ekCF3Kto6PO5erHoiqxktlTWaSCdj8fezMpY-pJUo6Q/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Switch').item.json.Name }}",
+            "CompanySize": "={{ $('Switch').item.json.CompanySize }}",
+            "Industry": "={{ $('Switch').item.json.Industry }}",
+            "EmailSubject": "={{ $json.emailSubject }}",
+            "LeadGrade": "Fallback",
+            "email": "={{ $('Switch').item.json.Email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CompanySize",
+              "displayName": "CompanySize",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EmailSubject",
+              "displayName": "EmailSubject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LeadGrade",
+              "displayName": "LeadGrade",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -544,
+        352
+      ],
+      "id": "88d719af-5980-4543-8a2a-bf20236f0e84",
+      "name": "Fallback Sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fDsQWQxq30evlUah",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://discord.com/api/webhooks/1519949214480732261/nLD6gWHZxrC6OXgCnWPdkgouBGwLk44F76VaNfZRREplyfqwtkXgCjsp57M6PnJWmjW8",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"⚠️ *Unmatched Lead Detected*\\n> **Name:** {{ $json.Name }}\\n> **CompanySize:** {{ $json.CompanySize }}\\n> **Action:** Review manually.\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -336,
+        352
+      ],
+      "id": "80f3429a-86f7-493e-96aa-041f487e068f",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "formTitle": "HTML Form",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "CompanySize",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "0"
+                  },
+                  {
+                    "option": "1-10"
+                  },
+                  {
+                    "option": "11-50"
+                  },
+                  {
+                    "option": "51+"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Industry",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -880,
+        -96
+      ],
+      "id": "74bc1fcb-fb82-48d0-bb01-7b69e7efe7d6",
+      "name": "On form submission",
+      "webhookId": "d5a0909d-fa24-45b5-878d-e299d13cd85a",
+      "executeOnce": false
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Bronze",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Silver",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gold",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fallback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bronze": {
+      "main": [
+        [
+          {
+            "node": "Bronze Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Silver": {
+      "main": [
+        [
+          {
+            "node": "Silver Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gold": {
+      "main": [
+        [
+          {
+            "node": "Gold Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Gold Email": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Bronze Email": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        []
+      ]
+    },
+    "Gold Sheet": {
+      "main": [
+        [
+          {
+            "node": "Send Gold Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Silver Sheet": {
+      "main": [
+        [
+          {
+            "node": "Send Silver Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bronze Sheet": {
+      "main": [
+        [
+          {
+            "node": "Send Bronze Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fallback": {
+      "main": [
+        [
+          {
+            "node": "Fallback Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fallback Sheet": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "K9ASfp1DT2198Z7i",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1
+  },
+  "versionId": "ed93bc13-2a5a-4309-aa1b-73b29af9a194",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "574200b6ab7f8fac2473e68a41897cf0c33a5b3e92a7be9ff65fff7d0267dc94"
+  },
+  "id": "ghGKQqZqLRVqMKSg",
+  "tags": []
+}
